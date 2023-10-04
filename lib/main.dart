@@ -139,6 +139,10 @@ class _MyPage extends State<MyPage> with SingleTickerProviderStateMixin {
                                       builder: (context) => PostPage()));
                             } else {
                               _currentIndex = index;
+                              _pageController.animateToPage(_currentIndex,
+                                  duration:
+                                  const Duration(milliseconds: 300),
+                                  curve: Curves.linear);
                             }
                           });
                         },
