@@ -4,11 +4,11 @@ class GestNotifier extends ChangeNotifier{
   bool isVisable=true;
 
   void forward(){
-    isVisable=false;
+    isVisable=true;
     notifyListeners();
   }
   void reverse(){
-    isVisable=true;
+    isVisable=false;
     notifyListeners();
   }
 }

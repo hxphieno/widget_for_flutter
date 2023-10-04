@@ -26,7 +26,6 @@ class MyPage extends StatefulWidget {
 class _MyPage extends State<MyPage> with SingleTickerProviderStateMixin {
   late PageController _pageController;
   int _currentIndex = 0;
-  bool isVisable=true;
 
   @override
   void initState() {
@@ -93,13 +92,6 @@ class _MyPage extends State<MyPage> with SingleTickerProviderStateMixin {
           ))
     ];
     final gestNotifier=Provider.of<GestNotifier>(context);
-    if(gestNotifier.isVisable) {
-      setState(() {
-        isVisable=false;
-      });
-    } else{setState(() {
-      isVisable=true;
-    });}
 
     return Scaffold(
       appBar: AppBar(
@@ -108,7 +100,7 @@ class _MyPage extends State<MyPage> with SingleTickerProviderStateMixin {
             ///测试动画用
             onPressed: () {
               setState(() {
-                isVisable=!isVisable;
+                gestNotifier.isVisable=!gestNotifier.isVisable;
               });
             },
             icon: const Icon(Icons.change_circle_rounded),
@@ -122,7 +114,7 @@ class _MyPage extends State<MyPage> with SingleTickerProviderStateMixin {
         onPageChanged: (index) {
           setState(() {
             _currentIndex = 2 * index;
-            isVisable=true;
+            gestNotifier.isVisable=true;
           });
         },
         children: pageList,
@@ -130,14 +122,14 @@ class _MyPage extends State<MyPage> with SingleTickerProviderStateMixin {
       bottomNavigationBar: AnimatedContainer(
           duration: const Duration(milliseconds: 400),
           child: Transform.translate(
-            offset: Offset(0, isVisable?0:200),
+            offset: Offset(0, gestNotifier.isVisable?0:200),
             child: GestureDetector(
               onVerticalDragEnd: (details) {
                 if (details.velocity.pixelsPerSecond.dy > 0) {
                   ///拖住组件下滑可隐藏
                   print("drag");
                   setState(() {
-                    isVisable=false;
+                    gestNotifier.isVisable=false;
                   });
                 }
               },

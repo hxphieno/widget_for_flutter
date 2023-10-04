@@ -24,11 +24,11 @@ class HomePage extends StatelessWidget {
               if (_controller.position.userScrollDirection ==
                   ScrollDirection.reverse) {
                 gestNotifier.reverse();
-                print("1");
+                print(gestNotifier.isVisable);
               } else if (_controller.position.userScrollDirection ==
                   ScrollDirection.forward) {
                 gestNotifier.forward();
-                print("2");
+                print(gestNotifier.isVisable);
               }
             }),
           children: [
