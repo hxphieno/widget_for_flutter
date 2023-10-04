@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:widget_for_flutter/provider.dart';
 import 'pages.dart';
 import 'routes.dart';
 
@@ -9,10 +11,10 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return ChangeNotifierProvider(create: (context)=>GestNotifier(),child: MaterialApp(
       debugShowCheckedModeBanner: false,
       home: MyPage(), // 将 Stateful Widget 添加到应用的主页
-    );
+    ));
   }
 }
 
@@ -90,6 +92,15 @@ class _MyPage extends State<MyPage> with SingleTickerProviderStateMixin {
             ),
           ))
     ];
+    final gestNotifier=Provider.of<GestNotifier>(context);
+    if(gestNotifier.isVisable) {
+      setState(() {
+        isVisable=false;
+      });
+    } else{setState(() {
+      isVisable=true;
+    });}
+
     return Scaffold(
       appBar: AppBar(
           backgroundColor: const Color.fromARGB(255, 255, 215, 0),

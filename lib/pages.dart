@@ -14,6 +14,7 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final gestNotifier=Provider.of<GestNotifier>(context);
     return Container(
         color: Colors.white,
         padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -22,9 +23,11 @@ class HomePage extends StatelessWidget {
             ..addListener(() {
               if (_controller.position.userScrollDirection ==
                   ScrollDirection.reverse) {
+                gestNotifier.reverse();
                 print("1");
               } else if (_controller.position.userScrollDirection ==
                   ScrollDirection.forward) {
+                gestNotifier.forward();
                 print("2");
               }
             }),
