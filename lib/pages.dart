@@ -11,6 +11,7 @@ import 'provider.dart';
 
 class HomePage extends StatelessWidget {
   late ScrollController _controller = ScrollController();
+  bool valid=true;///防止函数被多次执行
 
   @override
   Widget build(BuildContext context) {
@@ -20,15 +21,23 @@ class HomePage extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: ListView(
           controller: _controller
-            ..addListener(() {
-              if (_controller.position.userScrollDirection ==
-                  ScrollDirection.reverse) {
-                gestNotifier.reverse();
-                print(gestNotifier.isVisable);
-              } else if (_controller.position.userScrollDirection ==
-                  ScrollDirection.forward) {
-                gestNotifier.forward();
-                print(gestNotifier.isVisable);
+            ..addListener(() async {
+              if(valid){
+                if (_controller.position.userScrollDirection ==
+                    ScrollDirection.reverse) {
+                  valid=false;
+                  gestNotifier.reverse();
+                  print(gestNotifier.isVisable);
+                  await Future.delayed(Duration(milliseconds: 200));
+                  valid=true;
+                } else if (_controller.position.userScrollDirection ==
+                    ScrollDirection.forward) {
+                  valid=false;
+                  gestNotifier.forward();
+                  print(gestNotifier.isVisable);
+                  await Future.delayed(Duration(milliseconds: 200));
+                  valid=true;
+                }
               }
             }),
           children: [
