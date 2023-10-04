@@ -96,17 +96,8 @@ class _MyPage extends State<MyPage> with SingleTickerProviderStateMixin {
     return Scaffold(
       appBar: AppBar(
           backgroundColor: const Color.fromARGB(255, 255, 215, 0),
-          leading: IconButton(
-            ///测试动画用
-            onPressed: () {
-              setState(() {
-                gestNotifier.isVisable=!gestNotifier.isVisable;
-              });
-            },
-            icon: const Icon(Icons.change_circle_rounded),
-          ),
           centerTitle: true,
-          title: Text("测试用状态栏，来测")),
+          title: Text("用来好看点的状态栏")),
       resizeToAvoidBottomInset: false,
       extendBody: true,
       body: PageView(
@@ -114,13 +105,14 @@ class _MyPage extends State<MyPage> with SingleTickerProviderStateMixin {
         onPageChanged: (index) {
           setState(() {
             _currentIndex = 2 * index;
-            gestNotifier.isVisable=true;
+            gestNotifier.toBeTrue();
           });
         },
         children: pageList,
       ),
       bottomNavigationBar: AnimatedContainer(
           duration: const Duration(milliseconds: 400),
+          curve: Curves.linear,
           child: Transform.translate(
             offset: Offset(0, gestNotifier.isVisable?0:200),
             child: GestureDetector(
@@ -129,7 +121,7 @@ class _MyPage extends State<MyPage> with SingleTickerProviderStateMixin {
                   ///拖住组件下滑可隐藏
                   print("drag");
                   setState(() {
-                    gestNotifier.isVisable=false;
+                    gestNotifier.toBeFalse();
                   });
                 }
               },

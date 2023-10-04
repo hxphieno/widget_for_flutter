@@ -10,7 +10,7 @@ import 'provider.dart';
 ///目前发布页关系不大
 
 class HomePage extends StatelessWidget {
-  late ScrollController _controller = ScrollController();
+  final ScrollController _controller = ScrollController();
   bool valid=true;///防止函数被多次执行
 
   @override
@@ -26,16 +26,14 @@ class HomePage extends StatelessWidget {
                 if (_controller.position.userScrollDirection ==
                     ScrollDirection.reverse) {
                   valid=false;
-                  gestNotifier.reverse();
-                  print(gestNotifier.isVisable);
-                  await Future.delayed(Duration(milliseconds: 200));
+                  gestNotifier.toBeFalse();
+                  await Future.delayed(const Duration(milliseconds: 200));
                   valid=true;
                 } else if (_controller.position.userScrollDirection ==
                     ScrollDirection.forward) {
                   valid=false;
-                  gestNotifier.forward();
-                  print(gestNotifier.isVisable);
-                  await Future.delayed(Duration(milliseconds: 200));
+                  gestNotifier.toBeTrue();
+                  await Future.delayed(const Duration(milliseconds: 200));
                   valid=true;
                 }
               }
@@ -65,8 +63,14 @@ class HomePage extends StatelessWidget {
 class PersonalPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return const Center(
-      child: Text('Personal Page'),
+    final gestNotifier=Provider.of<GestNotifier>(context);
+    return GestureDetector(
+      onTap: (){
+        gestNotifier.toBeTrue();
+      },
+      child: const Center(
+        child: Text('Personal Page')
+      ),
     );
   }
 }
