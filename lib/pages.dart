@@ -4,10 +4,6 @@ import 'package:flutter/rendering.dart';
 import 'package:provider/provider.dart';
 import 'provider.dart';
 
-///首先是三个图标对应的页面：主页，个人页，发布页
-///主页要做成带Scroll可滚动
-///个人页用来控制点击事件，目前做成Stateless关系不大
-///目前发布页关系不大
 
 class HomePage extends StatelessWidget {
   final ScrollController _controller = ScrollController();
@@ -61,6 +57,8 @@ class HomePage extends StatelessWidget {
 }
 
 class PersonalPage extends StatelessWidget {
+  const PersonalPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     final gestNotifier=Provider.of<GestNotifier>(context);
@@ -76,6 +74,8 @@ class PersonalPage extends StatelessWidget {
 }
 
 class PostPage extends StatelessWidget {
+  const PostPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

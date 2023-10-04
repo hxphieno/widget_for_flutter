@@ -5,13 +5,15 @@ import 'pages.dart';
 import 'routes.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(create: (context)=>GestNotifier(),child: MaterialApp(
+    return ChangeNotifierProvider(create: (context)=>GestNotifier(),child: const MaterialApp(
       debugShowCheckedModeBanner: false,
       home: MyPage(), // 将 Stateful Widget 添加到应用的主页
     ));
@@ -19,6 +21,8 @@ class MyApp extends StatelessWidget {
 }
 
 class MyPage extends StatefulWidget {
+  const MyPage({super.key});
+
   @override
   State<MyPage> createState() => _MyPage();
 }
@@ -97,7 +101,7 @@ class _MyPage extends State<MyPage> with SingleTickerProviderStateMixin {
       appBar: AppBar(
           backgroundColor: const Color.fromARGB(255, 255, 215, 0),
           centerTitle: true,
-          title: Text("用来好看点的状态栏")),
+          title: const Text("用来好看点的状态栏")),
       resizeToAvoidBottomInset: false,
       extendBody: true,
       body: PageView(
@@ -114,12 +118,11 @@ class _MyPage extends State<MyPage> with SingleTickerProviderStateMixin {
           duration: const Duration(milliseconds: 400),
           curve: Curves.linear,
           child: Transform.translate(
-            offset: Offset(0, gestNotifier.isVisable?0:200),
+            offset: Offset(0, gestNotifier.isSeen?0:200),
             child: GestureDetector(
               onVerticalDragEnd: (details) {
                 if (details.velocity.pixelsPerSecond.dy > 0) {
                   ///拖住组件下滑可隐藏
-                  print("drag");
                   setState(() {
                     gestNotifier.toBeFalse();
                   });

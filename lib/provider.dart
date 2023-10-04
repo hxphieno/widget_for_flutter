@@ -2,14 +2,14 @@
 import 'package:flutter/material.dart';
 
 class GestNotifier extends ChangeNotifier{
-   bool isVisable=true;
+   bool isSeen=true;
 
   void toBeTrue(){
-    isVisable=true;
+    isSeen=true;
     notifyListeners();
   }
   void toBeFalse(){
-    isVisable=false;
+    isSeen=false;
     notifyListeners();
   }
 }
