@@ -6,9 +6,13 @@ import 'routes.dart';
 
 
 void main() {
-  runApp(ChangeNotifierProvider(
-      create: (context) => GestNotifier(), child: const MyPage()));
+  runApp(MaterialApp(
+    debugShowCheckedModeBanner: false,
+    home: ChangeNotifierProvider(
+        create: (context) => GestNotifier(), child: const MyPage()),
+  ));
 }
+
 
 class MyPage extends StatefulWidget {
   const MyPage({super.key});
@@ -86,101 +90,98 @@ class _MyPage extends State<MyPage> with SingleTickerProviderStateMixin {
     ];
     final gestNotifier = Provider.of<GestNotifier>(context);
 
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        appBar: AppBar(
-            backgroundColor: const Color.fromARGB(255, 255, 215, 0),
-            leading: IconButton(
-              onPressed: () {
-                setState(() {
-                  gestNotifier.isSeen = !gestNotifier.isSeen;
-                });
-              },
-              icon: Icon(Icons.change_circle_outlined),
-            ),
-            centerTitle: true,
-            title: const Text("用来好看点的状态栏")),
-        resizeToAvoidBottomInset: false,
-        extendBody: true,
-        body: PageView(
-          controller: _pageController,
-          onPageChanged: (index) {
-            setState(() {
-              _currentIndex = 2 * index;
-              gestNotifier.toBeTrue();
-            });
-          },
-          children: pageList,
-        ),
-        bottomNavigationBar: AnimatedContainer(
-            duration: const Duration(milliseconds: 200),
-            height: gestNotifier.isSeen
-                ? screenWidth * 0.1 + screenHeight * 0.03 + 10
-                : 0,
-            curve: Curves.linear,
-            child: Wrap(
-              children: [
-                GestureDetector(
-                  onVerticalDragEnd: (details) {
-                    if (details.velocity.pixelsPerSecond.dy > 0) {
-                      ///拖住组件下滑可隐藏
-                      setState(() {
-                        gestNotifier.toBeFalse();
-                      });
-                    }
-                  },
-                  child: Container(
-                    margin: EdgeInsets.symmetric(horizontal: screenWidth * 0.3),
-                    padding: const EdgeInsets.all(10),
-                    decoration: BoxDecoration(
-                        color: const Color.fromARGB(255, 255, 215, 0),
-                        borderRadius:
-                            BorderRadius.circular(screenWidth * 0.05 + 10)),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        ...List.generate(
-                            3,
-                            (index) => InkWell(
-                                  onTap: () {
-                                    setState(() {
-                                      if (index == 1) {
-                                        ///发布页单独控制
-                                        Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    const PostPage()));
-                                      } else {
-                                        _currentIndex = index;
-                                        _pageController.animateToPage(
-                                            _currentIndex,
-                                            duration: const Duration(
-                                                milliseconds: 300),
-                                            curve: Curves.linear);
-                                      }
-                                    });
-                                  },
-                                  child: Container(
-                                    width: screenWidth * 0.1,
-                                    height: screenWidth * 0.1,
-                                    decoration: BoxDecoration(
-                                        color: Colors.white60,
-                                        borderRadius: BorderRadius.circular(
-                                            screenWidth * 0.05)),
-                                    child: (_currentIndex == index)
-                                        ? contentList[index].selected
-                                        : contentList[index].unSelected,
-                                  ),
-                                ))
-                      ],
-                    ),
-                  ),
-                )
-              ],
-            )),
+    return Scaffold(
+      appBar: AppBar(
+          backgroundColor: const Color.fromARGB(255, 255, 215, 0),
+          leading: IconButton(
+            onPressed: () {
+              setState(() {
+                gestNotifier.isSeen = !gestNotifier.isSeen;
+              });
+            },
+            icon: Icon(Icons.change_circle_outlined),
+          ),
+          centerTitle: true,
+          title: const Text("用来好看点的状态栏")),
+      resizeToAvoidBottomInset: false,
+      extendBody: true,
+      body: PageView(
+        controller: _pageController,
+        onPageChanged: (index) {
+          setState(() {
+            _currentIndex = 2 * index;
+            gestNotifier.toBeTrue();
+          });
+        },
+        children: pageList,
       ),
+      bottomNavigationBar: AnimatedContainer(
+          duration: const Duration(milliseconds: 200),
+          height: gestNotifier.isSeen
+              ? screenWidth * 0.1 + screenHeight * 0.03 + 10
+              : 0,
+          curve: Curves.linear,
+          child: Wrap(
+            children: [
+              GestureDetector(
+                onVerticalDragEnd: (details) {
+                  if (details.velocity.pixelsPerSecond.dy > 0) {
+                    ///拖住组件下滑可隐藏
+                    setState(() {
+                      gestNotifier.toBeFalse();
+                    });
+                  }
+                },
+                child: Container(
+                  margin: EdgeInsets.symmetric(horizontal: screenWidth * 0.3),
+                  padding: const EdgeInsets.all(10),
+                  decoration: BoxDecoration(
+                      color: const Color.fromARGB(255, 255, 215, 0),
+                      borderRadius:
+                      BorderRadius.circular(screenWidth * 0.05 + 10)),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      ...List.generate(
+                          3,
+                              (index) => InkWell(
+                            onTap: () {
+                              setState(() {
+                                if (index == 1) {
+                                  ///发布页单独控制
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                          const PostPage()));
+                                } else {
+                                  _currentIndex = index;
+                                  _pageController.animateToPage(
+                                      _currentIndex,
+                                      duration: const Duration(
+                                          milliseconds: 300),
+                                      curve: Curves.linear);
+                                }
+                              });
+                            },
+                            child: Container(
+                              width: screenWidth * 0.1,
+                              height: screenWidth * 0.1,
+                              decoration: BoxDecoration(
+                                  color: Colors.white60,
+                                  borderRadius: BorderRadius.circular(
+                                      screenWidth * 0.05)),
+                              child: (_currentIndex == index)
+                                  ? contentList[index].selected
+                                  : contentList[index].unSelected,
+                            ),
+                          ))
+                    ],
+                  ),
+                ),
+              )
+            ],
+          )),
     );
   }
 }
