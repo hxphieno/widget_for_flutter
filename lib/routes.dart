@@ -9,5 +9,5 @@ class TapContent {
 }
 
 List<Widget> pageList=[
-  HomePage(),PersonalPage()
+  HomePage(),const PersonalPage()
 ];

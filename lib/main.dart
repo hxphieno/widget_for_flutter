@@ -9,7 +9,7 @@ void main() {
   runApp(MaterialApp(
     debugShowCheckedModeBanner: false,
     home: ChangeNotifierProvider(
-        create: (context) => GestNotifier(), child: const MyPage()),
+        create: (context) => GestureNotifier(), child: const MyPage()),
   ));
 }
 
@@ -88,19 +88,11 @@ class _MyPage extends State<MyPage> with SingleTickerProviderStateMixin {
             ),
           ))
     ];
-    final gestNotifier = Provider.of<GestNotifier>(context);
+    final gestureNotifier = Provider.of<GestureNotifier>(context);
 
     return Scaffold(
       appBar: AppBar(
           backgroundColor: const Color.fromARGB(255, 255, 215, 0),
-          leading: IconButton(
-            onPressed: () {
-              setState(() {
-                gestNotifier.isSeen = !gestNotifier.isSeen;
-              });
-            },
-            icon: Icon(Icons.change_circle_outlined),
-          ),
           centerTitle: true,
           title: const Text("用来好看点的状态栏")),
       resizeToAvoidBottomInset: false,
@@ -110,14 +102,14 @@ class _MyPage extends State<MyPage> with SingleTickerProviderStateMixin {
         onPageChanged: (index) {
           setState(() {
             _currentIndex = 2 * index;
-            gestNotifier.toBeTrue();
+            gestureNotifier.toBeTrue();
           });
         },
         children: pageList,
       ),
       bottomNavigationBar: AnimatedContainer(
           duration: const Duration(milliseconds: 200),
-          height: gestNotifier.isSeen
+          height: gestureNotifier.isSeen
               ? screenWidth * 0.1 + screenHeight * 0.03 + 10
               : 0,
           curve: Curves.linear,
@@ -128,7 +120,7 @@ class _MyPage extends State<MyPage> with SingleTickerProviderStateMixin {
                   if (details.velocity.pixelsPerSecond.dy > 0) {
                     ///拖住组件下滑可隐藏
                     setState(() {
-                      gestNotifier.toBeFalse();
+                      gestureNotifier.toBeFalse();
                     });
                   }
                 },

@@ -11,7 +11,7 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final gestNotifier=Provider.of<GestNotifier>(context);
+    final gestureNotifier=Provider.of<GestureNotifier>(context);
     return Container(
         color: Colors.white,
         padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -22,13 +22,13 @@ class HomePage extends StatelessWidget {
                 if (_controller.position.userScrollDirection ==
                     ScrollDirection.reverse) {
                   valid=false;
-                  gestNotifier.toBeFalse();
+                  gestureNotifier.toBeFalse();
                   await Future.delayed(const Duration(milliseconds: 200));
                   valid=true;
                 } else if (_controller.position.userScrollDirection ==
                     ScrollDirection.forward) {
                   valid=false;
-                  gestNotifier.toBeTrue();
+                  gestureNotifier.toBeTrue();
                   await Future.delayed(const Duration(milliseconds: 200));
                   valid=true;
                 }
@@ -61,10 +61,10 @@ class PersonalPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final gestNotifier=Provider.of<GestNotifier>(context);
+    final gestureNotifier=Provider.of<GestureNotifier>(context);
     return GestureDetector(
       onTap: (){
-        gestNotifier.toBeTrue();
+        gestureNotifier.toBeTrue();
       },
       child: const Center(
         child: Text('Personal Page')

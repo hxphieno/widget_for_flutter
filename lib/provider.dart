@@ -1,7 +1,7 @@
 
 import 'package:flutter/material.dart';
 
-class GestNotifier extends ChangeNotifier{
+class GestureNotifier extends ChangeNotifier{
    bool isSeen=true;
 
   void toBeTrue(){
